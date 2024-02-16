@@ -18,12 +18,4 @@ export class AppComponent implements OnInit {
       complete:()=>console.log('Request completed')
   })
   }
-
-  public getall(){
-    this.http.get('https://localhost:44377/api/Classes/getall').subscribe({
-      next: respose=> this.users=respose,
-      error:error=> console.log(error),
-      complete:()=>console.log('Request completed')
-  })
-}
 }
