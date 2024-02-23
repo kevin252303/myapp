@@ -1,0 +1,12 @@
+<h4 style="font-weight: bold;">Internal Server Error</h4>
+<ng-container *ngIf="error">
+    <h5 class="text-danger">Errors: {{error.message}}</h5>
+    <p class="font-weight-bold">Note: If you are seeing this, it's a server error.</p>
+    <p>What's to do next</p>
+    <ol>
+        <li>Check network tab in devtools.</li>
+    </ol>
+    <p style= "font-weight:bold">Here are error details</p>
+    <code class="mt-5" style="background-color: whitesmoke;">{{error.details}}</code>
+
+</ng-container>
