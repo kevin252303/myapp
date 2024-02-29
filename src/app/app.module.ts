@@ -20,6 +20,7 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { DatePickerComponent } from './_forms/date-picker/date-picker.component'
     BsDatepickerModule.forRoot()
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}
+    {provide: HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
+    {provide: HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true}
   ],
   bootstrap: [AppComponent]
 })

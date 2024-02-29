@@ -3,7 +3,7 @@ import { photo } from "./photo"
 export interface Member{
     id:number,
     username:string,
-    photourl:string,
+    photoUrl:string,
     age:number,
     knownAs:string,
     created:Date,
