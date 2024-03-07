@@ -42,7 +42,7 @@ export class PhotoEditorComponent implements OnInit {
           this.user.photoUrl = photo.url;
           this.accountservice.setCurrentUser(this.user);
           this.member.photoUrl = photo.url;
-          this.member.photo.forEach(p=>{
+          this.member.photos.forEach(p=>{
             if(p.isMain) p.isMain=false;
             if(p.id == photo.id)p.isMain = true
           })
@@ -55,7 +55,7 @@ export class PhotoEditorComponent implements OnInit {
     this.memberservice.deletePhoto(photoId).subscribe({
       next:_=>{
         if(this.member){
-          this.member.photo = this.member.photo.filter(x=>x.id !== photoId);
+          this.member.photos = this.member.photos.filter(x=>x.id !== photoId);
         }
       }
     })
@@ -63,7 +63,7 @@ export class PhotoEditorComponent implements OnInit {
 
   initializeUploader(){
     this.uploader = new FileUploader({
-      url : this.baseurl + 'users/add-photo',
+      url : this.baseurl + 'user/add-photo',
       authToken: 'Bearer ' + this.user?.token,
       isHTML5:true,
       allowedFileType:['image'],
@@ -79,7 +79,7 @@ export class PhotoEditorComponent implements OnInit {
     this.uploader.onSuccessItem=(item,response,status,header)=>{
       if(response){
         const photo = JSON.parse(response);
-        this.member?.photo.push(photo);
+        this.member?.photos.push(photo);
         if(photo.isMain && this.user && this.member){
           this.user.photoUrl = photo.url;
           this.member.photoUrl = photo.url;

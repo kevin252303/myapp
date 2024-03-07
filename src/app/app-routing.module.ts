@@ -6,23 +6,29 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guard/auth.guard';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { preveentUnsavedChangesGuard } from './_guard/preveent-unsaved-changes.guard';
+import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
-  {path:'',
-    runGuardsAndResolvers:'always',
-    canActivate:[authGuard],
-    children:[
-      {path:'members',component:MemberListsComponent},
-      {path:'members/:username',component:MemberDetailComponent},
-      {path:'lists',component:ListsComponent},
-      {path:'messages',component:MessagesComponent}
+  { path: '', component: HomeComponent },
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [authGuard],
+    children: [
+      { path: 'members', component: MemberListsComponent },
+      { path: 'member/edit', component: MemberEditComponent,canDeactivate:[preveentUnsavedChangesGuard] },
+      { path: 'members/:username', component: MemberDetailComponent, resolve:{member:memberDetailedResolver} },
+      { path: 'lists', component: ListsComponent },
+      { path: 'messages', component: MessagesComponent }
 
-    ]},
-  {path:'**',component:HomeComponent,pathMatch:'full'},
-  
-  
+    ]
+  },
+  { path: '**', component: HomeComponent, pathMatch: 'full' },
+
+
 ];
 
 @NgModule({

@@ -11,7 +11,6 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
-import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberListsComponent } from './members/member-lists/member-lists.component';
 import { SharedModule } from './_module/shared.module';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
@@ -21,6 +20,9 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 
 @NgModule({
@@ -31,12 +33,13 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     RegisterComponent,
     MessagesComponent,
     ListsComponent,
-    MemberDetailComponent,
     MemberListsComponent,
     MembersCardsComponent,
     PhotoEditorComponent,
     TextInputComponent,
     DatePickerComponent,
+    MemberEditComponent,
+    
     
     
   ],
@@ -48,11 +51,13 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     FormsModule,
     SharedModule,
     ReactiveFormsModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TabsModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
-    {provide: HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true}
+    {provide: HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true},
+    {provide: HTTP_INTERCEPTORS,useClass:LoadingInterceptor,multi:true}
   ],
   bootstrap: [AppComponent]
 })

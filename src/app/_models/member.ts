@@ -2,7 +2,7 @@ import { photo } from "./photo"
 
 export interface Member{
     id:number,
-    username:string,
+    userName:string,
     photoUrl:string,
     age:number,
     knownAs:string,
@@ -14,5 +14,5 @@ export interface Member{
     interest:string,
     city:string,
     country:string,
-    photo:photo[]
+    photos:photo[]
 }

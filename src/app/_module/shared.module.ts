@@ -4,6 +4,12 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { TimeagoModule } from "ngx-timeago";
+
 
 
 
@@ -12,18 +18,30 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
   imports: [
     CommonModule,
     BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
     ToastrModule.forRoot({
       progressBar: true,
       progressAnimation :'decreasing'
     }),
     FileUploadModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NgxSpinnerModule.forRoot({
+      type:'ball-scale-multiple'
+    }),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
+    TimeagoModule.forRoot()
   ],
   exports:[
     BsDropdownModule,
     ToastrModule,
     FileUploadModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    TabsModule,
+    NgxSpinnerModule,
+    PaginationModule,
+    ButtonsModule,
+    TimeagoModule
   ]
 })
 export class SharedModule { }
