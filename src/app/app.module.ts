@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,8 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomRouteStrategy } from './_services/CustomRouteStrategy';
 
 
 @NgModule({
@@ -39,9 +41,9 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     TextInputComponent,
     DatePickerComponent,
     MemberEditComponent,
-    
-    
-    
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -55,9 +57,10 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     TabsModule.forRoot()
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
-    {provide: HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true},
-    {provide: HTTP_INTERCEPTORS,useClass:LoadingInterceptor,multi:true}
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: RouteReuseStrategy, useClass: CustomRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

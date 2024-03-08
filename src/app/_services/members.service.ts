@@ -66,13 +66,13 @@ export class MembersService {
     )
   }
 
-  getMember(userName: string) {
+  getMember(username: string) {
     const member=[...this.memberCache.values()]
         .reduce((arr,elem)=>arr.concat(elem.result),[])
-        .find((member:Member)=>member.userName===userName);
+        .find((member:Member)=>member.userName===username);
 
     if(member) return of(member);
-    return this.http.get<Member>(this.baseurl + 'user/' + userName)
+    return this.http.get<Member>(this.baseurl + 'user/' + username)
   }
 
 
