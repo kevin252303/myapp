@@ -5,7 +5,7 @@ import { getPaginatedResult, getPaginationHeader } from './PaginationHelper';
 import { Message } from '../_models/message';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { User } from '../_models/user';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, Subject, take } from 'rxjs';
 import { group } from '@angular/animations';
 import { Group } from '../_models/group';
 
@@ -16,8 +16,12 @@ export class MessageService {
   baseUrl = environment.apiurl;
   huburl = environment.huburl;
   private hubconnection?: HubConnection;
+  type?:boolean;
   private messageSource = new BehaviorSubject<Message[]>([])
   messageThread$ = this.messageSource.asObservable();
+  private typingStatusChangedSource = new Subject<boolean>();
+  typingStatusChanged$ = this.typingStatusChangedSource.asObservable();
+  
 
   constructor(private http: HttpClient) { }
 
@@ -28,7 +32,7 @@ export class MessageService {
       })
       .withAutomaticReconnect()
       .build();
-
+    
     this.hubconnection.start().catch(error => console.log(error));
     this.hubconnection.on('ReceiveMessageThread', message => {
       this.messageSource.next(message);
@@ -55,6 +59,12 @@ export class MessageService {
         }
       })
     })
+
+    this.hubconnection.on('ReceiveTypingStatus',(typing:boolean)=>{
+      this.typingStatusChangedSource.next(typing); 
+    })
+    
+    
   }
 
   stopHubConnection() {
@@ -65,7 +75,7 @@ export class MessageService {
   }
 
   getMessages(pageNumber: number, pageSize: number, container: string) {
-    let params = getPaginationHeader(pageNumber, pageSize);
+  let params = getPaginationHeader(pageNumber, pageSize);
     params = params.append('container', container);
     return getPaginatedResult<Message[]>(this.baseUrl + 'messages', params, this.http);
   }
@@ -76,6 +86,11 @@ export class MessageService {
 
   sendMessage(username: string, content: string) {
     return this.hubconnection?.invoke('SendMessage',{recipientUsername:username,content})
+      .catch(error=>console.log(error));
+  }
+
+  typing(type:boolean,username: string, content: string) {
+    return this.hubconnection?.invoke('Typing',type,{recipientUsername:username,content})
       .catch(error=>console.log(error));
   }
 
