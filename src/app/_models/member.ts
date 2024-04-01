@@ -14,5 +14,7 @@ export interface Member{
     interest:string,
     city:string,
     country:string,
-    photos:photo[]
+    photos:photo[],
+    instaUrl:string,
+    twitterUrl:string
 }

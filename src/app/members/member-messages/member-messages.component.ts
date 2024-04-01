@@ -34,6 +34,8 @@ export class MemberMessagesComponent implements OnInit {
 
   }
 
+  
+
   onTyping() {
     const isTyping = true;
     if(!this.username)return;
@@ -52,6 +54,19 @@ export class MemberMessagesComponent implements OnInit {
       this.messageForm?.reset();
     });
 
+  }
+
+  initiatecall(user:string){
+    this.messageservice.initiateCall(user);
+  }
+
+  acceptcall(user:string){
+    this.messageservice.acceptCall(user);
+    
+  }
+
+  declinecall(user:string){
+    this.messageservice.declineCall(user);
   }
 
 

@@ -63,6 +63,35 @@ export class MessageService {
     this.hubconnection.on('ReceiveTypingStatus',(typing:boolean)=>{
       this.typingStatusChangedSource.next(typing); 
     })
+
+    this.hubconnection.on("IncomingCall", (callerUsername) => {
+      alert('Incoming call from '+callerUsername);
+      const callerUsernameElement = document.getElementById("callerUsername");
+      const incomingCallNotificationElement = document.getElementById("incomingCallNotification");
+  
+      if (callerUsernameElement && incomingCallNotificationElement) {
+          callerUsernameElement.textContent = callerUsername;
+          incomingCallNotificationElement.style.display = "block";
+      } else {
+          console.error("Caller username element or incoming call notification element not found.");
+      }
+  });
+  
+  this.hubconnection.on("CallAccepted", (recipientUsername) => {
+      console.log('call accepted');
+      
+      
+  });
+  
+  this.hubconnection.on("CallRejected", (recipientUsername) => {
+      console.log('call rejected');
+  });
+  
+  // Handle call ended
+  this.hubconnection.on("CallEnded", (otherUsername) => {
+      // Update UI to indicate that the call has ended
+      // You might stop the WebRTC call here
+  });
     
     
   }
@@ -96,5 +125,23 @@ export class MessageService {
 
   deleteMessage(id: number) {
     return this.http.delete(this.baseUrl + 'messages/' + id);
+  }
+
+  initiateCall(user:string){
+    console.log('call initiated');
+    return this.hubconnection?.invoke('CallUser',user);
+    
+  }
+
+  acceptCall(user:string){
+    if(document.getElementById("accpet")){
+      document.getElementById("accept")!.style.display="none";
+    }
+    return this.hubconnection?.invoke('AnswerCall',user)
+  }
+
+  
+  declineCall(user:string){
+    return this.hubconnection?.invoke('RejectCall',user)
   }
 }

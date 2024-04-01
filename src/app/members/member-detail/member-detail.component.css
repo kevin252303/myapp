@@ -14,4 +14,8 @@
     border-top: none;
 }
 
+.logo{
+    background: none;
+}
+
 .ngx-gallery{display: inline-block; margin-bottom: 20px;}

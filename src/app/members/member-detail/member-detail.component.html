@@ -23,11 +23,17 @@
                     <strong>Member Since</strong>
                     <p>{{member.created | date:'dd MMMM yyyy'}}</p>
                 </div>
+                <div>
+                    <strong>Social Media Connections</strong>
+                    <p><a target="_blank" href="{{member.instaUrl}}"><img src="./assets/png-transparent-logo-icon-instagram-logo-instagram-logo-purple-violet-text-thumbnail.png" height="50px" width="50px" alt="insta logo" ></a>
+                    <a href="{{member.twitterUrl}}" target="_blank"><img src="./assets/Logo_of_Twitter.svg.png" alt="twitter logo" height="50px" width="50px" [hspace]="10"></a></p>
+                </div>
             </div>
             <div class="card-footer">
                 <div class="btn-group d-flex">
                     <button class="btn btn-primary">Like</button>
                     <button (click)="selectTab('Messages')" class="btn btn-success">Messages</button>
+                    <button (click)="initiateCall(member.userName,member.id)" class="btn btn-primary"><i class="fa fa-phone"></i> Call</button>
                 </div>
             </div>
         </div>

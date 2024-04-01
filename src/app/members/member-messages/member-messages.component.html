@@ -38,5 +38,13 @@
                 </div>
             </div>
         </form>
+        <div>
+            <button (click)="initiatecall(username!)" class="btn btn-primary"><i class="fa fa-phone"></i> Call</button>
+        </div>
+    </div>
+    <div id="incomingCallNotification" style="display: none;">
+        <p>Incoming call from <span id="callerUsername"></span></p>
+        <button id="accept" (click)="acceptcall(username!)">Accept</button>
+        <button id="reject" (click)="declinecall(username!)">Decline</button>
     </div>
 </div>

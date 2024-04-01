@@ -13,6 +13,7 @@ import { PresenceService } from 'src/app/_services/presence.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { User } from 'src/app/_models/user';
 import { take } from 'rxjs';
+import { CallingService } from 'src/app/_services/calling.service';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class MemberDetailComponent implements OnInit,OnDestroy {
   user?: User;
 
   constructor(private accountservice: AccountService, private route: ActivatedRoute,
-    private messageservice: MessageService, public presence: PresenceService) {
+    private messageservice: MessageService, public presence: PresenceService, private callingservice :CallingService) {
     this.accountservice.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if (user) this.user = user;
@@ -80,6 +81,10 @@ export class MemberDetailComponent implements OnInit,OnDestroy {
     }
   }
 
+  initiateCall(username:string,userid:number){
+    this.callingservice.initiateCall(username,userid);
+  }
+
   getImages() {
     if (!this.member) return;
     for (const photo of this.member.photos) {
@@ -88,4 +93,6 @@ export class MemberDetailComponent implements OnInit,OnDestroy {
     }
   }
 
+  
+  
 }
