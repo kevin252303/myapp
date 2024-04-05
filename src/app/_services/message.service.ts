@@ -76,6 +76,10 @@ export class MessageService {
           console.error("Caller username element or incoming call notification element not found.");
       }
   });
+
+  this.hubconnection.on("UserOffline",()=>{
+    alert('User is offline');
+  })
   
   this.hubconnection.on("CallAccepted", (recipientUsername) => {
       console.log('call accepted');
@@ -89,8 +93,7 @@ export class MessageService {
   
   // Handle call ended
   this.hubconnection.on("CallEnded", (otherUsername) => {
-      // Update UI to indicate that the call has ended
-      // You might stop the WebRTC call here
+      console.log('call ended');
   });
     
     
@@ -134,14 +137,15 @@ export class MessageService {
   }
 
   acceptCall(user:string){
-    if(document.getElementById("accpet")){
-      document.getElementById("accept")!.style.display="none";
-    }
     return this.hubconnection?.invoke('AnswerCall',user)
   }
 
   
   declineCall(user:string){
     return this.hubconnection?.invoke('RejectCall',user)
+  }
+
+  endCall(user:string){
+    return this.hubconnection?.invoke('EndCall',user);
   }
 }

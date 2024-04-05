@@ -43,8 +43,10 @@
         </div>
     </div>
     <div id="incomingCallNotification" style="display: none;">
-        <p>Incoming call from <span id="callerUsername"></span></p>
-        <button id="accept" (click)="acceptcall(username!)">Accept</button>
-        <button id="reject" (click)="declinecall(username!)">Decline</button>
+        <p *ngIf="buttonvisible">Incoming call from <span id="callerUsername"></span></p>
+        <button *ngIf="buttonvisible" (click)="acceptcall(username!)">Accept</button>
+        <button *ngIf="buttonvisible" (click)="declinecall(username!)">Decline</button>
+        <button *ngIf="!buttonvisible && !isCallDeclined" (click)="endcall(username!)">End Call</button>
     </div>
+    <app-call *ngIf="showCallComponent"></app-call>
 </div>
